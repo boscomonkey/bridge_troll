@@ -1,4 +1,6 @@
 Bridgetroll::Application.routes.draw do
+  resources :event_permissions
+
   resources :locations
 
   devise_for :users

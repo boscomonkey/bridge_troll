@@ -59,7 +59,11 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(params[:event])
+    # @event = current_user.events.build(params[:event])
+    #
+    # @event = Event.new(params[:event].merge(:add_organizer => current_user))
+    # event.add_organizer some_user
+    @event = Event.new(params[:event].merge(:organizer => current_user))
 
     respond_to do |format|
       if @event.save

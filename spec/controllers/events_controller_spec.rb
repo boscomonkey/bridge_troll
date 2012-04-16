@@ -47,4 +47,19 @@ describe EventsController do
       end
     end
   end
+
+  describe "#create" do
+    before do
+      @event = Factory.build(:event)
+      @user = Factory.create(:user)
+      sign_in @user
+    end
+
+    it "should pass :organizer key to Event.new with current_user value" do
+      Event.should_receive(:new).with(hash_including(:organizer => @user)).
+        and_return(@event)
+
+      post :create, :event => {:title => "test 111 title"}
+    end
+  end
 end

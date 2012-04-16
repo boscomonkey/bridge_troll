@@ -1,0 +1,27 @@
+<h1>Listing event_permissions</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Event</th>
+    <th>Role</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @event_permissions.each do |event_permission| %>
+  <tr>
+    <td><%= event_permission.user_id %></td>
+    <td><%= event_permission.event_id %></td>
+    <td><%= event_permission.role %></td>
+    <td><%= link_to 'Show', event_permission %></td>
+    <td><%= link_to 'Edit', edit_event_permission_path(event_permission) %></td>
+    <td><%= link_to 'Destroy', event_permission, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Event permission', new_event_permission_path %>
