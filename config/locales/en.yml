@@ -27,8 +27,10 @@ en:
     formats:
       date_as_day_month_day_year: "%A, %B %d, %Y"
       date_as_day_mdy: "%a %1m/%1d/%Y"
+      gmail_date_as_day_mdy: "%A, %b %-d"
       time_as_hm_ampm: "%l:%M %P %Z"
       time_as_hm_ampm_no_zone: "%l:%M %P"
+      gmail_time_as_hm_ampm_no_zone: "%-l:%M %P"
       time_zone: "%Z"
       date_as_m: "%b"
       date_as_m_d: "%b %1d"

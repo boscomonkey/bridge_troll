@@ -2,7 +2,7 @@ require 'rails_helper'
 
 def event_for_dates(starts_at, ends_at)
   event = build(:event_with_no_sessions)
-  event.event_sessions << build(:event_session, event: @event, starts_at: starts_at, 
+  event.event_sessions << build(:event_session, event: @event, starts_at: starts_at,
     ends_at: 4.hours.since(starts_at) )
 
   event.event_sessions << build(:event_session, event: @event, starts_at: 4.hours.until(ends_at),
@@ -13,8 +13,18 @@ def event_for_dates(starts_at, ends_at)
 end
 
 describe EventsHelper do
-  describe "#formatted_event_date_range(event)" do
+  describe "pretty_print_session" do
+    before(:each) do
+      @event = event_for_dates( DateTime.parse('2013-02-05'),
+                                DateTime.parse('2013-02-07'))
+    end
 
+    it 'should return a' do
+      expect(helper.pretty_print_session(@event.event_sessions.first)).to eq("Test Session 1 on Monday, Feb 4, 2:00 pm to 6:00 pm HST")
+    end
+  end
+
+  describe "#formatted_event_date_range(event)" do
     context "when called with an event occurring in a single month" do
       before(:each) do
         @event = event_for_dates( DateTime.parse('2013-02-12'),

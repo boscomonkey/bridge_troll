@@ -37,6 +37,10 @@ module EventsHelper
     l event_session.date_in_time_zone(:starts_at), format: :date_as_day_mdy
   end
 
+  def gmail_formatted_session_date(event_session)
+    l event_session.date_in_time_zone(:starts_at), format: :gmail_date_as_day_mdy
+  end
+
   def formatted_session_time(event_session, start_or_end)
     l event_session.date_in_time_zone(start_or_end), format: :time_as_hm_ampm
   end
@@ -51,6 +55,13 @@ module EventsHelper
     end_time = l event_session.date_in_time_zone(:ends_at), format: :time_as_hm_ampm_no_zone
     zone = l event_session.date_in_time_zone(:starts_at), format: :time_zone
     "#{start_time} - #{end_time} #{zone}"
+  end
+
+  def gmail_formatted_session_timerange(event_session)
+    start_time = l event_session.date_in_time_zone(:starts_at), format: :gmail_time_as_hm_ampm_no_zone
+    end_time = l event_session.date_in_time_zone(:ends_at), format: :gmail_time_as_hm_ampm_no_zone
+    zone = l event_session.date_in_time_zone(:starts_at), format: :time_zone
+    "#{start_time} to #{end_time} #{zone}"
   end
 
   def formatted_session_datetime(event_session)
@@ -98,7 +109,7 @@ module EventsHelper
   end
 
   def pretty_print_session(session)
-    "#{session.name} on #{formatted_session_date(session)} from #{formatted_session_timerange(session)}"
+    "#{session.name} on #{gmail_formatted_session_date(session)}, #{gmail_formatted_session_timerange(session)}"
   end
 
   def verb(role)
@@ -127,7 +138,7 @@ module EventsHelper
     params = {}
     params["action"] = "TEMPLATE"
     params["text"] = "#{event.title}: #{event_session.name}"
-    params["dates"] = [event_session.starts_at, event_session.ends_at].map {|date| 
+    params["dates"] = [event_session.starts_at, event_session.ends_at].map {|date|
       date.utc.strftime('%Y%m%dT%H%M00Z')
     }.join('/')
     params["details"] = "more details here: #{event_url(event)}"
